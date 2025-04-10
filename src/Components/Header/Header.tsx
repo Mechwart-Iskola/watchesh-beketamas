@@ -2,6 +2,7 @@ import 'boxicons/css/boxicons.min.css';
 
 import Cart from '../Cart/Cart';
 import './header.css'
+import { useEffect, useState } from 'react';
 
 const Header = () => {
 
@@ -16,12 +17,23 @@ const Header = () => {
 
   {/* Állítsd be az App.css-ben az ul osztályszelektornak, hogy a listaelemek pontok nélkül jelenjenek meg */}
 
-  
+  const[darkTheme, setDarkTheme] = useState<boolean>(false)
+  const[mobileView, setMobileView] = useState<boolean>(false)
+  const[cartMenu, setCartMenu] = useState<boolean>(false)
+
+  useEffect(()=>{
+    if (darkTheme) {
+        document.body.classList.add("dark-theme")
+    }
+    else
+    document.body.classList.remove("dark-theme")
+  },[darkTheme])
+
 
   return (
     <>
     <header className="header" id="header">
-    <nav >
+    <nav className={mobileView ? "show-menu" : ""}>
         <a href="#" className="nav__logo">
             <i className='bx bxs-watch nav__logo-icon'></i> Rolex
         </a>
@@ -32,23 +44,29 @@ const Header = () => {
                 Mindegyik egy listaelem, és azon belül egy hivatkozás
                 a listaelem ostrálya nav__item, a hivatkozás osztálya nav__link
                 */}
+                <li className='nav__item'><a className='nav__link' href="">Home</a></li>
+                <li className='nav__item'><a className='nav__link' href="">Featured</a></li>
+                <li className='nav__item'><a className='nav__link' href="">Prodcuts</a></li>
+                <li className='nav__item'><a className='nav__link' href="">Home</a></li>
             </ul>
-            <div className="nav__close" id="nav-close">
+            <div onClick={() => setMobileView(false)} className="nav__close" id="nav-close">
                 <i className='bx bx-x' ></i>
             </div>
         </div>
-        <div className="nav__btns">           
-            <i className='bx bx-moon change-theme' id="theme-button"></i>
-            <div className="nav__shop" id="cart-shop" >
+        <div className="nav__btns">
+            <i onClick={() => setDarkTheme(prev => !prev)} className= {!darkTheme ? 'bx bx-moon change-theme' : 'bx bx-sun change-theme'}id="theme-button"></i>
+            <div onClick={() => setCartMenu(prev => !prev)} className="nav__shop" id="cart-shop" >
                 <i className='bx bx-shopping-bag'></i>
             </div>
-            <div className="nav__toggle" id="nav-toggle">
+            <div  onClick={() => setMobileView(true)} className="nav__toggle" id="nav-toggle">
                 <i className='bx bx-grid-alt' ></i>
             </div>
         </div>
     </nav>
 </header>
-{/*Itt jelenjen meg a Cart ha az ikonra kattintottunk */}
+{
+    cartMenu && <Cart></Cart>
+}
  </>
   )
 }

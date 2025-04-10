@@ -54,7 +54,10 @@
         padding: 4.5rem;
     }
 
-    .newsletter__subscribe {}
+    .newsletter__subscribe {
+        display: flex;
+        flex-direction: column;
+    }
 
     .newsletter__input {
         width: 100%;

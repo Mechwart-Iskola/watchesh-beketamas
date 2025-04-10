@@ -54,7 +54,8 @@
 
 @media screen and (min-width: 992px) {
     .featured__container {
-
+        display: flex;
+        flex-direction: row;
         padding-top: 2rem;
     }
 
